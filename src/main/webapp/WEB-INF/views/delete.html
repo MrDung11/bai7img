@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Delete Review</h1>
+<h2>Are you sure?</h2>
+<p>
+    <a href="/home"><input type="submit" value="List"></a>
+</p>
+<form th:action="@{/delete}" th:object="${review}" method="post">
+    <input th:type="hidden" name="id" th:field="*{id}">
+    <table>
+        <tr>
+            <td th:text="${review.dates}"></td>
+        </tr>
+        <tr>
+            <td th:text="${review.feedBack}"></td>
+        </tr>
+        <tr>
+            <td th:text="${review.likes}"></td>
+        </tr>
+        <tr>
+            <td th:text="${review.number}"></td>
+        </tr>
+        <tr>
+            <td th:text="${review.rate}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" style="color: red" value="Delete review"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

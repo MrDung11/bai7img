@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="/layout :: head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<img id="img-of-the-day">
+<script>
+    let query = 'https://api.nasa.gov/planetary/earth/assets?lon=100.75&lat=1.5&date=2014-02-01&dim=0.15&api_key=xYLlR03TnzTthYG4ZFtdgFeWyfE87dPzktYGRhJ2';
+    let request = new XMLHttpRequest();
+    request.open('GET', query);
+    request.onload = function() {
+        if (request.status === 200) {
+            let response = JSON.parse(request.responseText);
+            document.getElementById('img-of-the-day').setAttribute('src', response.url);
+        }
+    };
+    request.send();
+</script>
+
+
+<h2>Author Bai 6 JPA: </h2>
+<div th:each="r: ${list_date}">
+
+    <div>
+        <h2 th:text="${r.author}" style="color: coral"></h2>
+    </div>
+
+    <div>
+        <table  id = "products">
+            <thead>
+                <tr>
+                    <th>Rate</th>
+                    <th>Comment</th>
+                    <th>Date</th>
+                    <th>Number of like</th>
+                    <th>Like</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <h5 th:text= "*{r.rate}" style="color: blueviolet"></h5>
+                    </td>
+                    <td>
+                        <p th:text= "*{r.feedBack}"></p>
+                    </td>
+                    <td>
+                        <h5 th:text= "*{r.dates}" style="color: red"></h5>
+                    </td>
+                    <td>
+                        <h5 th:text="${r.likes}"></h5>
+                    </td>
+                    <td>
+                        <a th:href="@{/like/{id}(id=${r.getId()})}">
+                            <button style="color: blue">like</button>
+                        </a>
+                    </td>
+                    <td>
+                        <a th:href="@{/edit/__${r.getId()}__}">
+                            <button style="color: darkmagenta">Edit</button>
+                        </a>
+                    </td>
+                    <td>
+                        <a th:href="@{/delete/__${r.getId()}__}">
+                            <button style="color: red">Delete</button>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+<!--        <p>Feedback:</p>-->
+<!--        <p th:text= "*{r.feedBack}"></p>-->
+<!--        <a th:href="@{/like/{id}(id=${r.getId()})}">-->
+<!--            <button>like</button>-->
+<!--        </a>-->
+<!--        <h5 th:text="${r.likes}"></h5>-->
+<!--        <h5 th:text= "*{r.dates}"></h5>-->
+    </div>
+
+</div>
+<!--<div>-->
+<!--    <a th:href="@{'/'(page=${list_date.number - 1})}" th:if="${list_date.hasPrevious()}">Previous</a>-->
+<!--    <span th:text="${list_date.number + 1}"></span>/<span th:text="${list_date.totalPages}"></span>-->
+<!--    <a th:href="@{'/'(page=${list_date.number + 1})}" th:if="${list_date.hasNext()}">Next</a>-->
+<!--</div>-->
+<a href="/create"><button>Feedback</button></a>
+
+<hr style = "height:2px; border-width:0; color: blue; background-color: blue">
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>

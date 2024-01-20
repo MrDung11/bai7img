@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image of the day</title>
+
+    <style>
+        p{
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 20px;
+        }
+        select{
+            margin-top: 16px;
+        }
+    </style>
+
+</head>
+<body>
+
+<label th:if="error" style="color: red" th:text="${error}"></label>
+
+<form th:action= "@{/create}" method= "post" th:object= "${review}">
+
+    <div>
+        <select th:field= "*{rate}" name="rate">
+            <option th:each= "userVote:${userVotes}" th:value= "${userVote}" th:text= "${userVote}"></option>
+        </select>
+    </div>
+    <div th:if="${no_author}">
+        <input th:field="*{author}"/>
+    </div>
+    <div th:if="${author}">
+        <h1 th:text="${author}"/>
+        <input type="hidden" th:text="${author}"/>
+    </div>
+    <div>
+        <p>Feedback:</p>
+        <textarea th:field= "*{feedBack}" name="feedback" cols= "30" rows= "10"></textarea>
+    </div>
+
+    <button type="submit">Comment</button>
+</form>
+<a href="/"><button> Back to home</button></a>
+
+<!--<hr style = "height:2px; border-width:0; color: blue; background-color: blue">-->
+<!--<div th:each= "i: ${review_list}" >-->
+<!--    <p th:text= "'+'+${i.rate+' '+ i.feedBack}"></p>-->
+<!--    <p th:text= "${i.likes}+' likes'"></p>-->
+<!--    <button >-->
+<!--        <a th:href= "@{/{id}(id=${i.id})}">Like</a>-->
+<!--    </button>-->
+<!--    <hr style= "height:2px; border-width:0; color: blue; background-color: yellow">-->
+<!--</div>-->
+
+<!--
+ 1 Author: Hiển thị Author
+ 2 Feedback: Nhấn nút comment để gửi bình luận
+
+ 3 Các feedback, vote, author đợc lưu vào database
+
+ 4 Chỉ hiển thì lên home page các feedback (comment, like) của ngày hiện tại: Trong ngày
+==> Database có các trường: Id, vote, Author, Date, comment, like
+
+ 5 Vào view: Xem được tất cả các feedback
+
+ 6 Số lượng comment, like, vote
+
+ 7 Bổ sung thêm like cho các comment và hiển thị số lượt like
+    + Ô hiển thị số lượt vote bức ảnh
+    + Ô hiển thị số lượt like dưới mỗi comment
+ -->
+
+</body>
+</html>
